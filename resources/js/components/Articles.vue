@@ -1,6 +1,21 @@
 <template>
     <div>
         <h2>Articles</h2>
+        <form>
+            <div class="form-group">
+                <!--bind this input to article title-->
+                <input type="text" class="form-control" placeholder="Title" v-model="article.title"/>
+
+            </div>
+            <div class="form-group">
+                <!--bind this input to article body-->
+                s<textarea class="form-control" placeholder="Body" v-model="article.body"></textarea>
+
+            </div>
+            <button type="submit" class="btn btn-light btn-block">
+                Save
+            </button>
+        </form>
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <!--Disable the button if there is no previous page the url comes from the makePagination method-->
@@ -86,7 +101,7 @@
                     fetch(`api/article/${id}`,{
                       method: 'delete'//second parametr of the object
                     })
-                        .then(res => res.json())
+                        .then(res => res.json())//gives the article back
                         .then(data => {
                             alert('Article Removed');
                             this.fetchArticles();
