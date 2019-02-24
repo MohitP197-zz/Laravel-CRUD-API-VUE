@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="row">
+        <div class="col-md-6">
         <h2>Articles</h2>
         <form @submit.prevent="addArticle" class="mb-3">
             <div class="form-group">
@@ -16,6 +17,8 @@
                 Save
             </button>
         </form>
+        </div>
+        <div class="col-md-6">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <!--Disable the button if there is no previous page the url comes from the makePagination method-->
@@ -29,7 +32,7 @@
                 </li>
             </ul>
         </nav>
-        <div class="card card-body mb-2" v-for="article in articles" v-bind:key="article.id">
+        <div class="card card-body mb-2 col-md-12" v-for="article in articles" v-bind:key="article.id">
             <h3>{{article.title}}</h3>
             <p>{{article.body}}</p>
             <hr>
@@ -41,6 +44,8 @@
             </button>
 
         </div>
+        </div>
+
     </div>
 </template>
 
