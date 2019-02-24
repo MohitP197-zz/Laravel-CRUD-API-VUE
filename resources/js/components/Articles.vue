@@ -30,8 +30,11 @@
 
         methods: {
             fetchArticles(){
+                //for making request fetch API is used
                 fetch('api/articles')
+                //With fetch API one dot is to be done which gives the response but doesn't give data so by mapping with json
                     .then(res => res.json())
+                    //Another dot gives the actual data after json
                     .then(res  => {
                         console.log(res.data);
                     })

@@ -1793,9 +1793,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchArticles: function fetchArticles() {
-      fetch('api/articles').then(function (res) {
+      //for making request fetch API is used
+      fetch('api/articles') //With fetch API one dot is to be done which gives the response but doesn't give data so by mapping with json
+      .then(function (res) {
         return res.json();
-      }).then(function (res) {
+      }) //Another dot gives the actual data after json
+      .then(function (res) {
         console.log(res.data);
       });
     }
@@ -49052,8 +49055,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('articles', __webpack_require__(/*! ./components/Articles */ "./resources/js/components/Articles.vue").default);
 Vue.component('navbar', __webpack_require__(/*! ./components/Navbar */ "./resources/js/components/Navbar.vue").default);
+Vue.component('articles', __webpack_require__(/*! ./components/Articles */ "./resources/js/components/Articles.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

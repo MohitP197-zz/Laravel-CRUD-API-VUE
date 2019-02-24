@@ -29,9 +29,3 @@
         <script src="{{asset('js/app.js')}}"></script>
     </body>
 </html>
-<script>
-    import Navbar from "../js/components/Navbar";
-    export default {
-        components: {Navbar}
-    }
-</script>
