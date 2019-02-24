@@ -33,7 +33,7 @@
             <h3>{{article.title}}</h3>
             <p>{{article.body}}</p>
             <hr>
-            <button @click="editArticle(article)" class="btn btn-warning">
+            <button @click="editArticle(article)" class="btn btn-warning mb-2">
                 Edit
             </button>
             <button @click="deleteArticle(article.id)" class="btn btn-danger">
@@ -135,10 +135,27 @@
                             alert('Article Added');
                             this.fetchArticles();
                         })
+                        .catch(err => console.log(err));
                 }
                 else
                 {
                     //update
+                    fetch('api/article', {
+                        method: 'put',//post request
+                        //wrap in JSON.stringify as this need to be JSON string
+                        body: JSON.stringify(this.article),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            this.article.title = '';
+                            this.article.body = '';
+                            alert('Article Updated');
+                            this.fetchArticles();
+                        })
+                        .catch(err => console.log(err));
                 }
 
             },
@@ -150,7 +167,7 @@
                 //while updating there is article_id field which is also set to the article id that is being passed through
                 this.article.article_id = article.id;
                 this.article.title = article.title;
-                this.article.body = atiticle.body;
+                this.article.body = article.body;
             }
 
         }

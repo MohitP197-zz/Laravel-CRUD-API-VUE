@@ -1909,8 +1909,30 @@ __webpack_require__.r(__webpack_exports__);
           alert('Article Added');
 
           _this3.fetchArticles();
+        }).catch(function (err) {
+          return console.log(err);
         });
-      } else {//update
+      } else {
+        //update
+        fetch('api/article', {
+          method: 'put',
+          //post request
+          //wrap in JSON.stringify as this need to be JSON string
+          body: JSON.stringify(this.article),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.article.title = '';
+          _this3.article.body = '';
+          alert('Article Updated');
+
+          _this3.fetchArticles();
+        }).catch(function (err) {
+          return console.log(err);
+        });
       }
     },
     editArticle: function editArticle(article) {
@@ -1920,7 +1942,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.article.article_id = article.id;
       this.article.title = article.title;
-      this.article.body = atiticle.body;
+      this.article.body = article.body;
     }
   }
 });
@@ -37149,7 +37171,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-warning",
+                staticClass: "btn btn-warning mb-2",
                 on: {
                   click: function($event) {
                     return _vm.editArticle(article)
