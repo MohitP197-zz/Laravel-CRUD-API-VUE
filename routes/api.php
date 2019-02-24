@@ -22,7 +22,7 @@ Route::get('articles','ArticleController@index');
 
 //List single article
 
-Route::get('articles/{id}','ArticleController@show');
+Route::get('article/{id}','ArticleController@show');
 
 //Create new article
 
