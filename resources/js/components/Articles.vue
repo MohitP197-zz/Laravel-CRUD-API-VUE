@@ -6,7 +6,17 @@
 
 <script>
     export default {
-        name: "Articles"
+        data(){
+            return{
+                articles: [],
+                article: {
+                    id: '',
+                    title: '',
+                    body: ''
+                },
+                article_id: ''
+            }
+        }
     }
 </script>
 
