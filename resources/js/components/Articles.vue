@@ -36,6 +36,7 @@
                     .then(res => res.json())
                     //Another dot gives the actual data after json
                     .then(res  => {
+                        //res.data gives the data. res.links gives the pagination links, res.meta gives the last page, current page, etc.
                         console.log(res.data);
                     })
             }
