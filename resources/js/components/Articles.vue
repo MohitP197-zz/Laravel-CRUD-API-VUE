@@ -4,7 +4,9 @@
         <nav aria-label="Page navigation example">
             <ul class="pagination">
                 <!--Disable the button if there is no previous page the url comes from the makePagination method-->
-                <li v-bind: class="[{disabled: !pagination.prev_page_url}]"><a class="page-link" href="#">Previous</a></li>
+                <li v-bind:class="[{disabled: !pagination.prev_page_url}]" class="page-item">
+
+                    <a class="page-link" href="#" @click="fetchArticles(pagination.prev_page_url)">Previous</a></li>
 
                 <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
