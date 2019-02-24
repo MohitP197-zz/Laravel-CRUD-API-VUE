@@ -30,10 +30,10 @@ Route::post('articles','ArticleController@store');
 
 //To update
 
-Route::put('articles','ArticleController@store');
+Route::put('article','ArticleController@store');
 
 //To delete
 
-Route::delete('articles','ArticleController@destroy');
+Route::delete('article/{id}','ArticleController@destroy');
 
 
