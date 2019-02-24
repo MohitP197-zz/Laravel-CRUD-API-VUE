@@ -1805,6 +1805,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1881,6 +1885,42 @@ __webpack_require__.r(__webpack_exports__);
           return console.log(err);
         });
       }
+    },
+    //handles add and update
+    addArticle: function addArticle() {
+      var _this3 = this;
+
+      //edit is defined in the data
+      if (this.edit === false) {
+        //Add
+        fetch('api/article', {
+          method: 'post',
+          //post request
+          //wrap in JSON.stringify as this need to be JSON string
+          body: JSON.stringify(this.article),
+          headers: {
+            'content-type': 'application/json'
+          }
+        }).then(function (res) {
+          return res.json();
+        }).then(function (data) {
+          _this3.article.title = '';
+          _this3.article.body = '';
+          alert('Article Added');
+
+          _this3.fetchArticles();
+        });
+      } else {//update
+      }
+    },
+    editArticle: function editArticle(article) {
+      this.edit = true; //this article is equal to the article being passed in id
+
+      this.article.id = article.id; //while updating there is article_id field which is also set to the article id that is being passed through
+
+      this.article.article_id = article.id;
+      this.article.title = article.title;
+      this.article.body = atiticle.body;
     }
   }
 });
@@ -36959,62 +36999,76 @@ var render = function() {
     [
       _c("h2", [_vm._v("Articles")]),
       _vm._v(" "),
-      _c("form", [
-        _c("div", { staticClass: "form-group" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.article.title,
-                expression: "article.title"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { type: "text", placeholder: "Title" },
-            domProps: { value: _vm.article.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.article, "title", $event.target.value)
-              }
+      _c(
+        "form",
+        {
+          staticClass: "mb-3",
+          on: {
+            submit: function($event) {
+              $event.preventDefault()
+              return _vm.addArticle($event)
             }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
-          _vm._v("\n            s"),
-          _c("textarea", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.article.body,
-                expression: "article.body"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { placeholder: "Body" },
-            domProps: { value: _vm.article.body },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+          }
+        },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.article.title,
+                  expression: "article.title"
                 }
-                _vm.$set(_vm.article, "body", $event.target.value)
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Title" },
+              domProps: { value: _vm.article.title },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.article, "title", $event.target.value)
+                }
               }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-light btn-block", attrs: { type: "submit" } },
-          [_vm._v("\n            Save\n        ")]
-        )
-      ]),
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.article.body,
+                  expression: "article.body"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { placeholder: "Body" },
+              domProps: { value: _vm.article.body },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.article, "body", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-light btn-block",
+              attrs: { type: "submit" }
+            },
+            [_vm._v("\n            Save\n        ")]
+          )
+        ]
+      ),
       _vm._v(" "),
       _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
         _c("ul", { staticClass: "pagination" }, [
@@ -37091,6 +37145,19 @@ var render = function() {
             _c("p", [_vm._v(_vm._s(article.body))]),
             _vm._v(" "),
             _c("hr"),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning",
+                on: {
+                  click: function($event) {
+                    return _vm.editArticle(article)
+                  }
+                }
+              },
+              [_vm._v("\n            Edit\n        ")]
+            ),
             _vm._v(" "),
             _c(
               "button",

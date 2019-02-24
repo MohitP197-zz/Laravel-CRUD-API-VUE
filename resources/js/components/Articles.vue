@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Articles</h2>
-        <form>
+        <form @submit.prevent="addArticle" class="mb-3">
             <div class="form-group">
                 <!--bind this input to article title-->
                 <input type="text" class="form-control" placeholder="Title" v-model="article.title"/>
@@ -9,7 +9,7 @@
             </div>
             <div class="form-group">
                 <!--bind this input to article body-->
-                s<textarea class="form-control" placeholder="Body" v-model="article.body"></textarea>
+                <textarea class="form-control" placeholder="Body" v-model="article.body"></textarea>
 
             </div>
             <button type="submit" class="btn btn-light btn-block">
@@ -33,9 +33,13 @@
             <h3>{{article.title}}</h3>
             <p>{{article.body}}</p>
             <hr>
+            <button @click="editArticle(article)" class="btn btn-warning">
+                Edit
+            </button>
             <button @click="deleteArticle(article.id)" class="btn btn-danger">
                 Delete
             </button>
+
         </div>
     </div>
 </template>
@@ -108,9 +112,51 @@
                         })
                         .catch(err => console.log(err));
                 }
+            },
+            //handles add and update
+            addArticle()
+            {
+                //edit is defined in the data
+                if (this.edit === false)
+                {
+                    //Add
+                    fetch('api/article', {
+                        method: 'post',//post request
+                        //wrap in JSON.stringify as this need to be JSON string
+                        body: JSON.stringify(this.article),
+                        headers: {
+                            'content-type': 'application/json'
+                        }
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                            this.article.title = '';
+                            this.article.body = '';
+                            alert('Article Added');
+                            this.fetchArticles();
+                        })
+                }
+                else
+                {
+                    //update
+                }
+
+            },
+            editArticle(article)
+            {
+                this.edit = true;
+                //this article is equal to the article being passed in id
+                this.article.id = article.id;
+                //while updating there is article_id field which is also set to the article id that is being passed through
+                this.article.article_id = article.id;
+                this.article.title = article.title;
+                this.article.body = atiticle.body;
             }
+
         }
     }
+
+
 </script>
 
 <style scoped>
