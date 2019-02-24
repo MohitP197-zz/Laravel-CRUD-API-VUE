@@ -1773,6 +1773,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1796,18 +1804,39 @@ __webpack_require__.r(__webpack_exports__);
     this.fetchArticles();
   },
   methods: {
-    fetchArticles: function fetchArticles() {
+    //values from the api is extracted and used inside of the fetch instead of fetching from just api/articles
+    //parameter page_url
+    fetchArticles: function fetchArticles(page_url) {
       var _this = this;
 
-      //for making request fetch API is used
-      fetch('api/articles') //With fetch API one dot is to be done which gives the response but doesn't give data so by mapping with json
+      //defining different variable for this
+      var vm = this;
+      page_url = page_url || '/api/articles'; //for making request fetch API is used
+
+      fetch(page_url) //parameter
+      //With fetch API one dot is to be done which gives the response but doesn't give data so by mapping with json
       .then(function (res) {
         return res.json();
       }) //Another dot gives the actual data after json
       .then(function (res) {
+        //promise response
         //res.data gives the data. res.links gives the pagination links, res.meta gives the last page, current page, etc.
-        _this.articles = res.data;
+        _this.articles = res.data; //passing both links and meta from the data obtained from the api/articles
+
+        vm.makePagination(res.meta, res.links);
+      }).catch(function (err) {
+        return console.log(err);
       });
+    },
+    makePagination: function makePagination(meta, links) {
+      var pagination = {
+        //data from the api response api/articles
+        current_page: meta.current_page,
+        last_page: meta.last_page,
+        next_page_url: links.next,
+        prev_page_url: links.prev
+      };
+      this.pagination = pagination;
     }
   }
 });
@@ -36877,28 +36906,8 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("h2", [_vm._v("Articles")]),
-      _vm._v(" "),
-      _vm._l(_vm.articles, function(article) {
-        return _c("div", { key: article.id, staticClass: "card card-body" }, [
-          _c("h3", [_vm._v(_vm._s(article.title))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(article.body))])
-        ])
-      })
-    ],
-    2
-  )
-}
+var render = function () {}
 var staticRenderFns = []
-render._withStripped = true
 
 
 
