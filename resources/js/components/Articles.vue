@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col-md-6">
-        <h2>Articles</h2>
+        <h2>CRUD</h2>
         <form @submit.prevent="addArticle" class="mb-3">
             <div class="form-group">
                 <!--bind this input to article title-->
