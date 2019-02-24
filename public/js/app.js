@@ -1769,6 +1769,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1793,6 +1797,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     fetchArticles: function fetchArticles() {
+      var _this = this;
+
       //for making request fetch API is used
       fetch('api/articles') //With fetch API one dot is to be done which gives the response but doesn't give data so by mapping with json
       .then(function (res) {
@@ -1800,7 +1806,7 @@ __webpack_require__.r(__webpack_exports__);
       }) //Another dot gives the actual data after json
       .then(function (res) {
         //res.data gives the data. res.links gives the pagination links, res.meta gives the last page, current page, etc.
-        console.log(res.data);
+        _this.articles = res.data;
       });
     }
   }
@@ -36875,16 +36881,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c("h2", [_vm._v("Articles")]),
+      _vm._v(" "),
+      _vm._l(_vm.articles, function(article) {
+        return _c("div", { key: article.id, staticClass: "card card-body" }, [
+          _c("h3", [_vm._v(_vm._s(article.title))]),
+          _vm._v(" "),
+          _c("p", [_vm._v(_vm._s(article.body))])
+        ])
+      })
+    ],
+    2
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("Articles")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
